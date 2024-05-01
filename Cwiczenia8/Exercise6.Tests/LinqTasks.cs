@@ -292,7 +292,7 @@ namespace Exercise6
                 {
                     Ename = emp.Ename,
                     Job = emp.Job,
-                    Hiredate = emp.HireDate
+                    HireDate = emp.HireDate 
                 };
 
             var defaultValues = new[]
@@ -301,14 +301,13 @@ namespace Exercise6
                 {
                     Ename = "Brak wartości",
                     Job = (string)null,
-                    Hiredate = (DateTime?)null
+                    HireDate = (DateTime?)null
                 }
             };
 
             var result = employees.Union(defaultValues);
             return result;
         }
-
 
         /// <summary>
         /// Wykorzystując LINQ pobierz pracowników podzielony na departamenty pamiętając, że:
@@ -324,7 +323,8 @@ namespace Exercise6
         public static IEnumerable<object> Task11()
         {
             IEnumerable<object> result = from emp in Emps
-                group emp by emp.Deptno into departmentGroup
+                join dept in Depts on emp.Deptno equals dept.Deptno
+                group emp by dept.Dname into departmentGroup 
                 where departmentGroup.Count() > 1
                 select new
                 {
@@ -334,8 +334,7 @@ namespace Exercise6
 
             return result.ToList();
         }
-
-
+        
         /// <summary>
         /// Napisz własną metodę rozszerzeń, która pozwoli skompilować się poniższemu fragmentowi kodu.
         /// Metodę dodaj do klasy CustomExtensionMethods, która zdefiniowana jest poniżej.
